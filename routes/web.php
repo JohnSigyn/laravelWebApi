@@ -14,5 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return response('OK', 200)
+    ->header('Content-Type', 'text/plain');
+});
+Route::post('/', function () {
+    return response('OK', 200)
+    ->header('Content-Type', 'text/plain');
 });
