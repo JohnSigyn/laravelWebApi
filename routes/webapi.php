@@ -21,7 +21,9 @@ Route::get('/', function(){
 // USER API
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login', [UserController::class,'login']);
-Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'getUser']);
+
+
+Route::middleware('auth:sanctum')->post('/user', [UserController::class, 'getUser']);
 
 // PRODUCT API
 // Route::post('/products', ProductController::class);

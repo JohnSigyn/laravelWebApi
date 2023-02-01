@@ -20,7 +20,7 @@ class UserController extends Controller
             "phone" => 'required|unique:users|max:255',
             "password" => 'required|min:8|max:255',
         ]);
-
+  
         $user = User::create([
 
             "name" => $request->name,
@@ -37,11 +37,11 @@ class UserController extends Controller
     public function login(Request $request)
     {
         try {
-            $request->validate([
-                'email' => 'required|email|string',
-                'password' => 'required|string',
+            // $request->validate([
+            //     'email' => 'required|email|string',
+            //     'password' => 'required|string',
 
-            ]);
+            // ]);
             $user = User::where('email', $request->email)->first();
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response()->noContent(403);
