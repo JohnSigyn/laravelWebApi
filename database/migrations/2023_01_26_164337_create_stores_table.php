@@ -27,9 +27,10 @@ return new class extends Migration
             $table->decimal('loyalty_given', 8, 2)->nullable();
             $table->boolean('gst_applicable');
             $table->integer('low_stock');
-            $table->string('paper_size')->default('a4');
-            $table->unsignedInteger('user_id');
+            $table->enum("license_type",["fully_paid","partially_paid"])->default("partially_paid");
         });
+
+    
     }
 
     /**

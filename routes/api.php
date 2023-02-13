@@ -55,8 +55,6 @@ Route::post('/login', function (Request $request) {
         ]);
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
-            // NOTE:  Wrong password or user does not exist
-            // 403: Forbidden
             return response()->noContent(403);
         }
         return response()->json([
