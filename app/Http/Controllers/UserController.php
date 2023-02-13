@@ -30,22 +30,21 @@ class UserController extends Controller
                 "email" => $request->email,
                 "phone" => $request->phone,
                 "password" => Hash::make($request->password),
-                "store_id"=>$store->id,
+                "store_id" => $store->id,
             ]);
             $user->assignRole('worker');
-            
         } else {
             $validated = $request->validate([
-                "store_name"=>'required|unique:App\Models\Store,name',
-                "store_address"=>'required',
-                "store_invoice"=>'required',
-                "store_gst"=>'required',
-                "store_pan"=>'required',
-                "store_loyalty_value"=>'required',
-                "store_loyalty_given"=>'required',
-                "store_gst"=>'required',
-                "store_low_stock_threshhold"=>'required',
-                "store_license"=>'required',
+                "store_name" => 'required|unique:App\Models\Store,name',
+                "store_address" => 'required',
+                "store_invoice" => 'required',
+                "store_gst" => 'required',
+                "store_pan" => 'required',
+                "store_loyalty_value" => 'required',
+                "store_loyalty_given" => 'required',
+                "store_gst" => 'required',
+                "store_low_stock_threshhold" => 'required',
+                "store_license" => 'required',
             ]);
             $store = Store::create([
                 "name" => $request->store_name,
@@ -67,16 +66,16 @@ class UserController extends Controller
                 "email" => $request->email,
                 "phone" => $request->phone,
                 "password" => Hash::make($request->password),
-                "store_id"=>$store->id,
+                "store_id" => $store->id,
             ]);
             $user->assignRole('admin');
         }
 
-    
+
         $token = $user->createToken('API TOKEN')->plainTextToken;
         return response()->json([
             'user' => $user,
-            'store'=>$store,
+            'store' => $store,
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
@@ -93,6 +92,8 @@ class UserController extends Controller
             if (!$user || !Hash::check($request->password, $user->password)) {
                 return response()->noContent(403);
             }
+            $user->tokens()->delete();
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
@@ -107,8 +108,11 @@ class UserController extends Controller
     }
     public function getUser(Request $request)
     {
-       
-        $user=User::where("id",$request->user()->id)->with("store")->get();
-        return $user;
+
+        $user = User::where("id", $request->user()->id)->first();
+        $user->getRoleNames();
+        $store = Store::findOrFail($user->id);
+        $user["store"] = $store;
+        return response()->json($user);
     }
 }
