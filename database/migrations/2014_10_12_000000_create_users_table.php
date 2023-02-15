@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger("store_id");
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

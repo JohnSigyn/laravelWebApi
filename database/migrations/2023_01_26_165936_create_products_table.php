@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('store_id');
+            $table->unsignedBigInteger('store_id');
+            $table->foreign('store_id')->references("id")->on("stores")->onDelete(("cascade"));
             $table->string('hsn')->nullable();
             $table->string('bar')->nullable();
             $table->string('unit')->nullable();
-            $table->string('reason')->nullable();
             $table->decimal('sellingPrice', 8, 2)->unsigned();
             $table->decimal('tax', 5, 2)->nullabel()->default(0);
             $table->decimal('costPrice', 8, 2)->unsigned();

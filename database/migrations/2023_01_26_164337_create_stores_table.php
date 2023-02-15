@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('gst_applicable');
             $table->integer('low_stock');
             $table->enum("license_type",["fully_paid","partially_paid"])->default("partially_paid");
+            $table->softDeletes();
         });
 
     
