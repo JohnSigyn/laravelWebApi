@@ -84,17 +84,18 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'required|email|string|exists:Users,email',
+                'email' => 'required|email|string|exists:users,email',
                 'password' => 'required|string',
 
             ]);
+            
             $user = User::where('email', $request->email)->first();
             if (!Hash::check($request->password, $user->password)) {
                 return response()->json([
-                'status' => false,
-                'message' => 'Incorrect Password',
-               
-            ], 404); 
+                    'status' => false,
+                    'message' => 'Incorrect Password',
+
+                ], 404);
             }
             $user->tokens()->delete();
 
