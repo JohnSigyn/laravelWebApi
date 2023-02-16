@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreign('customer_id')->references("id")->on("customers");
             $table->unsignedBigInteger('store_id')->nullable();
             $table->foreign('store_id')->references("id")->on("stores")->onDelete("cascade");
-            $table->integer('loyalty_points')->default(0);
-            $table->enum("sales_mode",["online","walk_in"])->default("walk_in");
+            $table->integer('loyalty_point')->default(0);
+            $table->enum("sale_mode",["online","walk_in"])->default("walk_in");
             $table->softDeletes();
         });
     }

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('sale_histories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sales_id')->nullable();
-            $table->foreign('sales_id')->references("id")->on("sales")->onDelete("cascade");
+            $table->unsignedBigInteger('sale_id')->nullable();
+            $table->foreign('sale_id')->references("id")->on("sales")->onDelete("cascade");
             $table->unsignedBigInteger('store_id')->nullable();
             $table->foreign('store_id')->references("id")->on("stores")->onDelete("cascade");
             $table->decimal("paid_amount",9,2)->required();
