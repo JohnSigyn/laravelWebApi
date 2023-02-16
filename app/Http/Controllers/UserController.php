@@ -83,14 +83,18 @@ class UserController extends Controller
     public function login(Request $request)
     {
         try {
-            // $request->validate([
-            //     'email' => 'required|email|string',
-            //     'password' => 'required|string',
+            $request->validate([
+                'email' => 'required|email|string|exists:Users,email',
+                'password' => 'required|string',
 
-            // ]);
+            ]);
             $user = User::where('email', $request->email)->first();
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                return response()->noContent(403);
+            if (!Hash::check($request->password, $user->password)) {
+                return response()->json([
+                'status' => false,
+                'message' => 'Incorrect Password',
+               
+            ], 404); 
             }
             $user->tokens()->delete();
 

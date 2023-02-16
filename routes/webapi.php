@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 
 use Dotenv\Validator;
@@ -33,5 +34,7 @@ Route::group(["middleware"=>"auth:sanctum"],function(){
 
     // Product group
     Route::resource('product', ProductController::class);
+    // Product group
+    Route::resource('sales', SaleController::class);
 });
 
